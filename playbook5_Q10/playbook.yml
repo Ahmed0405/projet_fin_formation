@@ -7,5 +7,5 @@
       cron:     
         minute: "0"
         hour: "1"
-        job: "sudo update"
+        job: "sudo apt  update"
       when: "'test' in group_names"

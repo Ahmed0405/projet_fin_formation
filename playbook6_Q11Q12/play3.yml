@@ -1,14 +1,15 @@
 ---
 - name: "hproxy"
-  hosts: localhost
+  hosts: 172.19.10.164
+  gather_facts: yes
 #  become: yes
   vars:
 
     haproxy_backend_servers:
       - name: ansible
-        address: 172.19.10.164
+        address: localhost:8080
       - name: ansible
-        address: 172.19.10.73
+        address: 172.19.10.73:8080
 
 
 

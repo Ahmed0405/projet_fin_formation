@@ -31,7 +31,6 @@
         lv: lv_p1p2
         size: 120M 
       when: "'projet' in group_names"
-
     - name: creation de point de montage
       file:
         state: directory
