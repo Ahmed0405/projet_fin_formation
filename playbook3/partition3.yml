@@ -1,0 +1,47 @@
+---
+- name: partition
+  hosts: projet 
+  tasks:
+    - name: "Premiere Partition centos"
+      parted:
+        device: /dev/sdd
+        number: 1
+        state: present
+        part_end: 100MiB
+      when: "'projet' in group_names"
+      
+    - name: "Deuxieme Partition Centos"
+      parted:
+        device: /dev/sdd
+        number: 2 
+        state: present
+        part_start: 110MiB
+        part_end: 210MiB
+      when: "'projet' in group_names"
+    
+    - name: volume de groupe
+      lvg: 
+        vg: vg_p1p2
+        pvs: /dev/sdd1,/dev/sdd2
+        pesize: 8
+      when: "'projet' in group_names"
+    - name: volume logique
+      lvol:
+        vg: vg_p1p2
+        lv: lv_p1p2
+        size: 120M 
+      when: "'projet' in group_names"
+
+    - name: creation de point de montage
+      file:
+        state: directory
+        path: /mnt2
+        mode: '0777'
+    
+    
+    - name: mount de lvp1p2
+      mount:
+        path: /mnt2
+        src: /dev/vg_p1p2/lv_p1p2
+        fstype: xfs
+        state: present

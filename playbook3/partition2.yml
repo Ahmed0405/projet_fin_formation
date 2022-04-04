@@ -1,0 +1,44 @@
+---
+- name: partition
+  hosts: all
+
+
+  tasks:
+    - name: "Premiere Partition centos"
+      parted:
+        device: /dev/sdd
+        number: 1
+        state: present
+        part_end: 100MiB
+      when: "'projet' in group_names"
+      
+    - name: "Deuxieme Partition Centos"
+      parted:
+        device: /dev/sdd
+        number: 2 
+        state: present
+        part_start: 110MiB
+        part_end: 210MiB
+      when: "'projet' in group_names"
+    
+    - name: "Deuxieme Partition ubuntu"
+      parted:
+        device: /dev/sda
+        number: 7
+        state: present
+        part_end: 100MiB
+
+      when: "'test' in group_names"
+
+    - name: "Deuxieme Partition UBUNTU"
+      parted:
+        device: /dev/sda
+        number: 6
+        state: present
+        #  part_start: 110MiB
+        part_end: 210MiB
+      when: "'test' in group_names"
+
+
+   
+        

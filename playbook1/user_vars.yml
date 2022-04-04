@@ -1,0 +1,9 @@
+users:
+  - username: jean
+    Type: dev
+  - username: Philippe
+    Type: dev
+  - username: Christian
+    Type: test
+  - username: Nicolas
+    Type: test

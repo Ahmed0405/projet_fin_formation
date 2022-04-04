@@ -1,0 +1,17 @@
+---
+- name: creation d'un fichier personnalisé dans /etc 
+  hosts: all
+  gather_facts: yes
+  vars:
+    - type: "{%if 'projet' in group_names%}developpement{%else%}test{%endif%}" 
+  tasks:
+    - name: "creation d'un fichier personnalisé dans /etc"
+      template:
+        src: type.j2
+        dest: /etc/type.txt
+        owner: root
+        group: root
+        mode: 0644
+
+
+

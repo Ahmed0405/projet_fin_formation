@@ -1,0 +1,2 @@
+- name: "creation d'un fichier personnalisé dans /etc"
+  hosts: all

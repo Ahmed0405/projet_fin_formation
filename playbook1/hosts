@@ -1,0 +1,8 @@
+[projet]
+## user ansible local
+localhost   ansible_connection=local
+## ansible_project
+ansible_connection=ssh   ansible_host=172.19.10.84
+[test]
+## machine formation
+ansible_connection=ssh   ansible_host=172.19.10.73

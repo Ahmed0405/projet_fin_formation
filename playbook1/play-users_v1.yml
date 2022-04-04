@@ -1,0 +1,52 @@
+---
+- name: creation des users Question 5  # Nom du playbook
+  hosts: all # nom des hosts ou nom des groupes de hots, all : tous les hosts ds l'inventaaire
+  #become: yes  # pas besoin car on a configurer ansible.cfg
+  vars_files:
+    - "user_vars.yml"   # fichier contient la liste des utulisateurs avec leurs type
+    - "mdp.yml"         # fichier contient les mot de passes des useres (les mots de passe sont hachés avec ansible-vault)
+ 
+  tasks:
+    
+# creation des groupes dev et test avec le module group d'ansible 
+# j'ai utilisé la structure de controle when 
+#
+    - name: " creation de groupe dev"
+      group:
+        name: dev
+        state: present
+      when: "'projet' in group_names"
+
+    - name: " creation de groupe test"
+      group:
+        name: "test"
+        state: present                               
+      when: "'test' in group_names"
+
+        # creation des users avec leurs :
+        # - groupe secondaire
+        # - mot de passe
+
+
+# creation des users pour le groupe dev
+
+    - name: " creation des  users Type dev "
+      user:
+        name: "{{ item.username }}"
+        groups: "{{ item.Type }}"
+        password: "{{ password_dev | password_hash('sha512') }}"
+        state: present
+      when: (item.Type == 'dev' and 'projet' in group_names) 
+      loop: "{{ users }}"
+
+# creation des users pour le groupe test
+
+     
+    - name: " creation des  users Type Test "
+      user:
+        name: "{{ item.username }}"
+        groups: "{{ item.Type }}"
+        password: "{{ password_test | password_hash('sha512') }}"
+        state: present
+      when: (item.Type  == 'test' and "test" in group_names)
+      loop: "{{ users }}"  

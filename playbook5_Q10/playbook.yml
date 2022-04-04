@@ -1,0 +1,11 @@
+---
+- name: "crontab"
+  hosts: all
+
+  tasks:
+    - name: "planification des taches"
+      cron:     
+        minute: "0"
+        hour: "1"
+        job: "sudo update"
+      when: "'test' in group_names"

@@ -1,0 +1,26 @@
+---
+- name: partition
+  hosts: all
+
+
+  tasks:
+    - name: "creation des partitions groupe projet"
+      block:
+        - name: "Premiere Partition"
+          parted:
+            device: /dev/sdc
+            number: 4
+            state: present
+            part_start: 510MiB
+            part_end: 610MiB
+
+        - name: "Deuxieme Partition"
+          parted:
+            device: /dev/sdc
+            number: 5 
+            state: present
+            part_start: 620MiB
+            part_end: 710MiB
+      when: "'projet' in group_names"
+
+    
